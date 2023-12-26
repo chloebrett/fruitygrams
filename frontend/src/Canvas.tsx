@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
+import {
+  extractWordsHorizontal,
+  extractWordsVertical,
+  validateWords,
+} from "./Validator";
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 10;
@@ -62,26 +67,41 @@ const INITIAL_BOARD_STATE: BoardState = {
   ),
 };
 
-const logLetters = (board: BoardState, rects: ShapeState[]) => {
-  const letters: string[][] = []
-  for (let y=0; y<board.cells.length; y++) {
-    const row = board.cells[y]
-    letters.push(new Array())
-    for (let x=0; x<row.length; x++) {
-      const square = row[x]
-      const rect = rects.find(shape => shape.cellX === x && shape.cellY === y)
-      letters[y].push(rect?.letter || " ")
+const extractLetters = (board: BoardState, rects: ShapeState[]) => {
+  const letters: string[][] = [];
+  for (let y = 0; y < board.cells.length; y++) {
+    const row = board.cells[y];
+    letters.push(new Array());
+    for (let x = 0; x < row.length; x++) {
+      const rect = rects.find(
+        (shape) => shape.cellX === x && shape.cellY === y
+      );
+      letters[y].push(rect?.letter || " ");
     }
   }
-  console.log(letters.map(row => row.join("")).join("\n"))
-}
+  return letters;
+};
+
+const logLetters = (board: BoardState, rects: ShapeState[]) => {
+  console.log(
+    extractLetters(board, rects)
+      .map((row) => row.join(""))
+      .join("\n")
+  );
+};
 
 const Canvas = () => {
   const [board, setBoard] = useState<BoardState>(INITIAL_BOARD_STATE);
   const [rects, setRects] = useState<ShapeState[]>(INITIAL_STATE);
 
   console.log(board);
-  logLetters(board, rects)
+  logLetters(board, rects);
+  const extracted = extractLetters(board, rects);
+  console.log(
+    extractWordsHorizontal(extracted),
+    extractWordsVertical(extracted)
+  );
+  const validityCheckResult = validateWords(extracted);
 
   const handleDragStart = (e: any) => {
     const id = e.target.id();
@@ -143,38 +163,48 @@ const Canvas = () => {
   };
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight}>
-      <Layer>
-        <Text text="Drag squares around!" />
-        {rects.map((rect) => (
-          <Group
-            id={rect.id}
-            key={`group-${rect.id}`}
-            x={cellXToX(rect.cellX)}
-            y={cellYToY(rect.cellY)}
-            draggable
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-          >
-            <Rect
-              key={rect.id}
-              width={60}
-              height={60}
-              fill="#fff"
-              opacity={0.8}
-              shadowColor="black"
-              shadowBlur={10}
-              shadowOpacity={0.6}
-              shadowOffsetX={rect.isDragging ? 10 : 5}
-              shadowOffsetY={rect.isDragging ? 10 : 5}
-              scaleX={rect.isDragging ? 1.2 : 1}
-              scaleY={rect.isDragging ? 1.2 : 1}
-            />
-            <Text key={`text-${rect.id}`} text={rect.letter} fontSize={40} />
-          </Group>
-        ))}
-      </Layer>
-    </Stage>
+    <div>
+      <p>
+        Valid words ({validityCheckResult.validWords.length}):{" "}
+        {validityCheckResult.validWords.join(", ")}
+      </p>
+      <p>
+        Invalid words ({validityCheckResult.invalidWords.length}):{" "}
+        {validityCheckResult.invalidWords.join(", ")}
+      </p>
+      <Stage width={window.innerWidth} height={window.innerHeight}>
+        <Layer>
+          <Text text="Drag squares around!" />
+          {rects.map((rect) => (
+            <Group
+              id={rect.id}
+              key={`group-${rect.id}`}
+              x={cellXToX(rect.cellX)}
+              y={cellYToY(rect.cellY)}
+              draggable
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+            >
+              <Rect
+                key={rect.id}
+                width={60}
+                height={60}
+                fill="#fff"
+                opacity={0.8}
+                shadowColor="black"
+                shadowBlur={10}
+                shadowOpacity={0.6}
+                shadowOffsetX={rect.isDragging ? 10 : 5}
+                shadowOffsetY={rect.isDragging ? 10 : 5}
+                scaleX={rect.isDragging ? 1.2 : 1}
+                scaleY={rect.isDragging ? 1.2 : 1}
+              />
+              <Text key={`text-${rect.id}`} text={rect.letter} fontSize={40} />
+            </Group>
+          ))}
+        </Layer>
+      </Stage>
+    </div>
   );
 };
 
