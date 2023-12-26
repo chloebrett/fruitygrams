@@ -1,12 +1,11 @@
 import React from 'react';
-import { Stage, Layer, Star, Text } from 'react-konva';
+import { Stage, Layer, Rect, Text } from 'react-konva';
 
 function generateShapes() {
   return [...Array(10)].map((_, i) => ({
     id: i.toString(),
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
-    rotation: Math.random() * 180,
     isDragging: false,
   }));
 }
@@ -14,24 +13,24 @@ function generateShapes() {
 const INITIAL_STATE = generateShapes();
 
 const Canvas = () => {
-  const [stars, setStars] = React.useState(INITIAL_STATE);
+  const [rects, setRects] = React.useState(INITIAL_STATE);
 
   const handleDragStart = (e: any) => {
     const id = e.target.id();
-    setStars(
-      stars.map((star) => {
+    setRects(
+      rects.map((rect) => {
         return {
-          ...star,
-          isDragging: star.id === id,
+          ...rect,
+          isDragging: rect.id === id,
         };
       })
     );
   };
   const handleDragEnd = (e: any) => {
-    setStars(
-      stars.map((star) => {
+    setRects(
+      rects.map((rect) => {
         return {
-          ...star,
+          ...rect,
           isDragging: false,
         };
       })
@@ -42,26 +41,24 @@ const Canvas = () => {
     <Stage width={window.innerWidth} height={window.innerHeight}>
       <Layer>
         <Text text="Drag squares around!" />
-        {stars.map((star) => (
-          <Star
-            key={star.id}
-            id={star.id}
-            x={star.x}
-            y={star.y}
-            numPoints={5}
-            innerRadius={20}
-            outerRadius={40}
-            fill="#89b717"
+        {rects.map((rect) => (
+          <Rect
+            key={rect.id}
+            id={rect.id}
+            x={rect.x}
+            y={rect.y}
+            width={60}
+            height={60}
+            fill="#fff"
             opacity={0.8}
             draggable
-            rotation={star.rotation}
             shadowColor="black"
             shadowBlur={10}
             shadowOpacity={0.6}
-            shadowOffsetX={star.isDragging ? 10 : 5}
-            shadowOffsetY={star.isDragging ? 10 : 5}
-            scaleX={star.isDragging ? 1.2 : 1}
-            scaleY={star.isDragging ? 1.2 : 1}
+            shadowOffsetX={rect.isDragging ? 10 : 5}
+            shadowOffsetY={rect.isDragging ? 10 : 5}
+            scaleX={rect.isDragging ? 1.2 : 1}
+            scaleY={rect.isDragging ? 1.2 : 1}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
           />
