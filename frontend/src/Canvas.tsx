@@ -69,16 +69,13 @@ const Canvas = () => {
       <Layer>
         <Text text="Drag squares around!" />
         {rects.map((rect) => (
-          <Group key={`group-${rect.id}`}><Rect
+          <Group id={rect.id} key={`group-${rect.id}`} x={rect.x} y={rect.y} draggable onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}><Rect
             key={rect.id}
-            id={rect.id}
-            x={rect.x}
-            y={rect.y}
             width={60}
             height={60}
             fill="#fff"
             opacity={0.8}
-            draggable
             shadowColor="black"
             shadowBlur={10}
             shadowOpacity={0.6}
@@ -86,9 +83,7 @@ const Canvas = () => {
             shadowOffsetY={rect.isDragging ? 10 : 5}
             scaleX={rect.isDragging ? 1.2 : 1}
             scaleY={rect.isDragging ? 1.2 : 1}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-          /><Text key={`text-${rect.id}`} text={rect.letter} x={rect.x} y={rect.y} fontSize={40} /></Group>
+          /><Text key={`text-${rect.id}`} text={rect.letter} fontSize={40} /></Group>
         ))}
       </Layer>
     </Stage>
