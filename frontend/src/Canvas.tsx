@@ -2,12 +2,12 @@ import React from 'react';
 import { Stage, Layer, Rect, Text, Group } from 'react-konva';
 
 function generateShapes() {
-  return [...Array(10)].map((_, i) => ({
+  return [...Array(26)].map((_, i) => ({
     id: i.toString(),
     x: snapValue(Math.random() * window.innerWidth),
     y: snapValue(Math.random() * window.innerHeight),
     isDragging: false,
-    letter: generateRandomLetter(),
+    letter: getLetter(i),
   }));
 }
 
@@ -20,10 +20,14 @@ const snapValue = (value: number) => {
 const generateRandomInt = (min: number, max: number) =>
   (Math.random() * (max - min + 1)) + min
 
-const generateRandomLetter = () => {
+const getLetter = (index: number) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const index = generateRandomInt(0, 25);
   return chars.substring(index, index + 1);
+}
+
+const generateRandomLetter = () => {
+  const index = generateRandomInt(0, 25);
+  return getLetter(index);
 }
 
 const INITIAL_STATE = generateShapes();
@@ -70,20 +74,20 @@ const Canvas = () => {
         <Text text="Drag squares around!" />
         {rects.map((rect) => (
           <Group id={rect.id} key={`group-${rect.id}`} x={rect.x} y={rect.y} draggable onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}><Rect
-            key={rect.id}
-            width={60}
-            height={60}
-            fill="#fff"
-            opacity={0.8}
-            shadowColor="black"
-            shadowBlur={10}
-            shadowOpacity={0.6}
-            shadowOffsetX={rect.isDragging ? 10 : 5}
-            shadowOffsetY={rect.isDragging ? 10 : 5}
-            scaleX={rect.isDragging ? 1.2 : 1}
-            scaleY={rect.isDragging ? 1.2 : 1}
-          /><Text key={`text-${rect.id}`} text={rect.letter} fontSize={40} /></Group>
+            onDragEnd={handleDragEnd}><Rect
+              key={rect.id}
+              width={60}
+              height={60}
+              fill="#fff"
+              opacity={0.8}
+              shadowColor="black"
+              shadowBlur={10}
+              shadowOpacity={0.6}
+              shadowOffsetX={rect.isDragging ? 10 : 5}
+              shadowOffsetY={rect.isDragging ? 10 : 5}
+              scaleX={rect.isDragging ? 1.2 : 1}
+              scaleY={rect.isDragging ? 1.2 : 1}
+            /><Text key={`text-${rect.id}`} text={rect.letter} fontSize={40} /></Group>
         ))}
       </Layer>
     </Stage>
