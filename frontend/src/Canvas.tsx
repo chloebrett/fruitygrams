@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stage, Layer, Rect, Text, Group } from "react-konva";
 import {
   extractWordsHorizontal,
   extractWordsVertical,
   validateWords,
 } from "./Validator";
-import { getNLetters } from "./Bag";
-import socket from './Socket';
+import socket from "./Socket";
 
-console.log(socket)
+console.log(socket);
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 10;
@@ -29,17 +28,15 @@ interface ShapeState {
   letter: string;
 }
 
-const NUM_LETTERS = 16;
-const chars = getNLetters(NUM_LETTERS); // cache
+let nextId = 0;
 
-const generateShapes: () => ShapeState[] = () =>
-  [...Array(NUM_LETTERS)].map((_, i) => ({
-    id: i.toString(),
-    cellX: generateRandomInt(0, BOARD_WIDTH - 1),
-    cellY: generateRandomInt(0, BOARD_HEIGHT - 1),
-    isDragging: false,
-    letter: getLetter(i),
-  }));
+const generateShape: (letter: string) => ShapeState = (letter) => ({
+  id: (nextId++).toString(),
+  cellX: 0,
+  cellY: 0,
+  isDragging: false,
+  letter,
+});
 
 const cellXToX = (cellX: number) => cellX * 60;
 
@@ -49,22 +46,10 @@ const xToCellX = (x: number) => Math.round(x / 60);
 
 const yToCellY = (y: number) => Math.round(y / 60);
 
-const generateRandomInt = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
-
-const getLetter = (index: number) => {
-  return chars.substring(index, index + 1);
-};
-
-const INITIAL_STATE = generateShapes();
+const INITIAL_STATE: ShapeState[] = [];
 const INITIAL_BOARD_STATE: BoardState = {
-  cells: [...Array(BOARD_HEIGHT)].map((_, y) =>
-    [...Array(BOARD_WIDTH)].map((_, x) => {
-      const foundShape = INITIAL_STATE.find(
-        (shape) => shape.cellX === x && shape.cellY === y
-      );
-      return { shapeId: foundShape?.id || null };
-    })
+  cells: [...Array(BOARD_HEIGHT)].map(() =>
+    [...Array(BOARD_WIDTH)].map(() => ({ shapeId: null }))
   ),
 };
 
@@ -91,9 +76,29 @@ const logLetters = (board: BoardState, rects: ShapeState[]) => {
   );
 };
 
+const resetServerState = () => {
+  socket.send("/reset");
+};
+
 const Canvas = () => {
   const [board, setBoard] = useState<BoardState>(INITIAL_BOARD_STATE);
   const [rects, setRects] = useState<ShapeState[]>(INITIAL_STATE);
+
+  useEffect(() => {
+    const listener = (event: MessageEvent<any>) => {
+      const data = event.data as string;
+
+      if (data.includes("[letters]")) {
+        const letters: string[] = data.substring("[letters]".length).split("");
+        const shapes = letters.map(generateShape);
+        setRects(shapes);
+      }
+    };
+
+    socket.addEventListener("message", listener);
+
+    return () => socket.removeEventListener("message", listener);
+  });
 
   console.log(board);
   logLetters(board, rects);
@@ -173,9 +178,9 @@ const Canvas = () => {
         Invalid words ({validityCheckResult.invalidWords.length}):{" "}
         {validityCheckResult.invalidWords.join(", ")}
       </p>
+      <button onClick={resetServerState}>Reset</button>
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
-          <Text text="Drag squares around!" />
           {rects.map((rect) => (
             <Group
               id={rect.id}

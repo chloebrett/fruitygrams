@@ -4,7 +4,7 @@ const socket = new WebSocket("ws://localhost:8080/ws");
 socket.addEventListener("open", (event) => {
   socket.send("Connection established");
 
-  socket.send("/letter")
+  socket.send("/letters")
 });
 
 // Listen for messages

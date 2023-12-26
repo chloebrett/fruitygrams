@@ -43,7 +43,10 @@ class ChatApplication {
      */
     private val server = ChatServer()
 
-    private val letterBag = LetterBag()
+    /**
+     * Bag of letters to pull from.
+     */
+    private var letterBag = LetterBag()
 
     /**
      * This is the main method of application in this class.
@@ -153,7 +156,11 @@ class ChatApplication {
                     else -> server.memberRenamed(id, newName)
                 }
             }
-            command.startsWith("/letter") -> server.sendTo(id, "server", letterBag.pullLetters(16))
+            command.startsWith("/letters") -> server.sendTo(id, "server", "[letters] ${letterBag.pullLetters(16)}")
+            command.startsWith("/reset") -> {
+                letterBag = LetterBag()
+                server.sendTo(id, "server", "[reset] server state reset")
+            }
             // The command 'help' allows users to get a list of available commands.
             command.startsWith("/help") -> server.help(id)
             // If no commands are matched at this point, we notify about it.
