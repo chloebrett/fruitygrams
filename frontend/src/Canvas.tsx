@@ -5,6 +5,7 @@ import {
   extractWordsVertical,
   validateWords,
 } from "./Validator";
+import { getNLetters } from "./Bag";
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 10;
@@ -25,8 +26,11 @@ interface ShapeState {
   letter: string;
 }
 
+const NUM_LETTERS = 16;
+const chars = getNLetters(NUM_LETTERS); // cache
+
 const generateShapes: () => ShapeState[] = () =>
-  [...Array(26)].map((_, i) => ({
+  [...Array(NUM_LETTERS)].map((_, i) => ({
     id: i.toString(),
     cellX: generateRandomInt(0, BOARD_WIDTH - 1),
     cellY: generateRandomInt(0, BOARD_HEIGHT - 1),
@@ -46,13 +50,7 @@ const generateRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 const getLetter = (index: number) => {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   return chars.substring(index, index + 1);
-};
-
-const generateRandomLetter = () => {
-  const index = generateRandomInt(0, 25);
-  return getLetter(index);
 };
 
 const INITIAL_STATE = generateShapes();
