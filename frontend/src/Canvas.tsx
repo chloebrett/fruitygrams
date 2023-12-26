@@ -6,6 +6,9 @@ import {
   validateWords,
 } from "./Validator";
 import { getNLetters } from "./Bag";
+import socket from './Socket';
+
+console.log(socket)
 
 const BOARD_WIDTH = 10;
 const BOARD_HEIGHT = 10;

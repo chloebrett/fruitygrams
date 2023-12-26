@@ -30,6 +30,7 @@ kotlin {
                 implementation "io.ktor:ktor-server-default-headers"
                 implementation "io.ktor:ktor-server-sessions"
                 implementation "ch.qos.logback:logback-classic:1.4.6"
+                implementation "com.google.guava:guava:33.0.0-jre"
             }
         }
 
@@ -49,7 +50,7 @@ repositories {
 
 tasks.register("run", JavaExec) {
     dependsOn(backendMainClasses)
-    mainClass.set("io.ktor.samples.chat.backend.ChatApplicationKt")
+    mainClass.set("com.chloebrett.fruitygrams.ChatApplicationKt")
     classpath(configurations.backendRuntimeClasspath, backendJar)
     args = []
 }
