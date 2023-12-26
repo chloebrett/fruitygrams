@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stage, Layer, Rect, Text } from 'react-konva';
+import { Stage, Layer, Rect, Text, Group } from 'react-konva';
 
 function generateShapes() {
   return [...Array(10)].map((_, i) => ({
@@ -7,6 +7,7 @@ function generateShapes() {
     x: snapValue(Math.random() * window.innerWidth),
     y: snapValue(Math.random() * window.innerHeight),
     isDragging: false,
+    letter: generateRandomLetter(),
   }));
 }
 
@@ -14,6 +15,15 @@ const snapValue = (value: number) => {
   const out = Math.round(value / 60) * 60
   console.log(`in: ${value}, out: ${out}`)
   return out
+}
+
+const generateRandomInt = (min: number, max: number) =>
+  (Math.random() * (max - min + 1)) + min
+
+const generateRandomLetter = () => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const index = generateRandomInt(0, 25);
+  return chars.substring(index, index + 1);
 }
 
 const INITIAL_STATE = generateShapes();
@@ -59,7 +69,7 @@ const Canvas = () => {
       <Layer>
         <Text text="Drag squares around!" />
         {rects.map((rect) => (
-          <Rect
+          <Group key={`group-${rect.id}`}><Rect
             key={rect.id}
             id={rect.id}
             x={rect.x}
@@ -78,7 +88,7 @@ const Canvas = () => {
             scaleY={rect.isDragging ? 1.2 : 1}
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
-          />
+          /><Text key={`text-${rect.id}`} text={rect.letter} x={rect.x} y={rect.y} fontSize={40} /></Group>
         ))}
       </Layer>
     </Stage>
