@@ -4,10 +4,16 @@ import { Stage, Layer, Rect, Text } from 'react-konva';
 function generateShapes() {
   return [...Array(10)].map((_, i) => ({
     id: i.toString(),
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
+    x: snapValue(Math.random() * window.innerWidth),
+    y: snapValue(Math.random() * window.innerHeight),
     isDragging: false,
   }));
+}
+
+const snapValue = (value: number) => {
+  const out = Math.round(value / 60) * 60
+  console.log(`in: ${value}, out: ${out}`)
+  return out
 }
 
 const INITIAL_STATE = generateShapes();
@@ -27,12 +33,23 @@ const Canvas = () => {
     );
   };
   const handleDragEnd = (e: any) => {
+    const target = e.target;
+    const id = target.id();
     setRects(
       rects.map((rect) => {
-        return {
-          ...rect,
-          isDragging: false,
-        };
+        if (rect.id === id) {
+          console.log(e.target);
+          const x = snapValue(e.target.x());
+          const y = snapValue(e.target.y());
+          target.setAbsolutePosition({ x, y })
+          return {
+            ...rect,
+            x, y,
+            isDragging: false,
+          }
+        } else {
+          return { ...rect, isDragging: false, }
+        }
       })
     );
   };
