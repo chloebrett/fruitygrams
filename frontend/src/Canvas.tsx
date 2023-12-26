@@ -9,8 +9,9 @@ import socket from "./Socket";
 
 console.log(socket);
 
-const BOARD_WIDTH = 10;
-const BOARD_HEIGHT = 10;
+const BOARD_WIDTH = 20;
+const BOARD_HEIGHT = 15;
+const CELL_SIZE_PX = 60;
 
 interface CellState {
   shapeId: string | null;
@@ -30,21 +31,21 @@ interface ShapeState {
 
 let nextId = 0;
 
-const generateShape: (letter: string) => ShapeState = (letter) => ({
+const generateShape: (letter: string, index: number) => ShapeState = (letter, index) => ({
   id: (nextId++).toString(),
-  cellX: 0,
+  cellX: index,
   cellY: 0,
   isDragging: false,
   letter,
 });
 
-const cellXToX = (cellX: number) => cellX * 60;
+const cellXToX = (cellX: number) => cellX * CELL_SIZE_PX;
 
-const cellYToY = (cellY: number) => cellY * 60;
+const cellYToY = (cellY: number) => cellY * CELL_SIZE_PX;
 
-const xToCellX = (x: number) => Math.round(x / 60);
+const xToCellX = (x: number) => Math.round(x / CELL_SIZE_PX);
 
-const yToCellY = (y: number) => Math.round(y / 60);
+const yToCellY = (y: number) => Math.round(y / CELL_SIZE_PX);
 
 const INITIAL_STATE: ShapeState[] = [];
 const INITIAL_BOARD_STATE: BoardState = {
@@ -89,7 +90,8 @@ const Canvas = () => {
       const data = event.data as string;
 
       if (data.includes("[letters]")) {
-        const letters: string[] = data.substring("[letters]".length).split("");
+        console.log(data)
+        const letters: string[] = data.substring("[server] [letters] ".length).split("");
         const shapes = letters.map(generateShape);
         setRects(shapes);
       }
@@ -193,8 +195,8 @@ const Canvas = () => {
             >
               <Rect
                 key={rect.id}
-                width={60}
-                height={60}
+                width={CELL_SIZE_PX}
+                height={CELL_SIZE_PX}
                 fill="#fff"
                 opacity={0.8}
                 shadowColor="black"

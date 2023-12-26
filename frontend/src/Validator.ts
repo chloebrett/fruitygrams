@@ -13,7 +13,7 @@ export const validateWords: (board: string[][]) => ValidationResult = (
   const words = [
     ...extractWordsHorizontal(board),
     ...extractWordsVertical(board),
-  ].map(word => word.toLocaleLowerCase());
+  ].map(word => word.toLocaleUpperCase());
 
   const validWords = words.filter((word) => dictSet.has(word));
   const invalidWords = words.filter((word) => !dictSet.has(word));
