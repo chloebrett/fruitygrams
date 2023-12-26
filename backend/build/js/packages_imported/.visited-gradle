@@ -1,0 +1,58 @@
+{
+  "version": "9",
+  "items": {
+    "e28362e5c801fe4ce307a04ef837a746": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-js/1.9.21/8339a3076c84fa3fceebf57ff96f612afd40d2b4/kotlin-stdlib-js-1.9.21.klib"
+    },
+    "b50857453dcb30a49d765d6aca822dfe": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-dom-api-compat/1.9.21/3c0ac04445c1aeec4366d69e1791cd6ad31ddc07/kotlin-dom-api-compat-1.9.21.klib"
+    },
+    "a66860f155cb10a237acb5f7d0f6d0e3": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js-runner/1.9.21/e9b1fc55af69eb09d63b271d17c217d9483241cc/kotlin-test-js-runner-1.9.21.jar",
+      "target": "kotlin-test-js-runner/0.0.1"
+    },
+    "ad654155bd4cf253c989ed62d4f72ff9": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-js-js/2.3.7/57d85763df23b1c851b668058ce93cd1bf170286/ktor-client-js-js-2.3.7.klib"
+    },
+    "ee7fed3dfac2063a913f78a0f45951d5": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core-js/2.3.7/30f3ddf85db446282927df63f6cadb32f5061c68/ktor-client-core-js-2.3.7.klib",
+      "target": "ktor-ktor-client-core/2.3.7"
+    },
+    "d433bb0ebacdc5de7ac7e663e21dd21a": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-events-js/2.3.7/60cd92ddaffa2d4af4b441049180d3900c10aad8/ktor-events-js-2.3.7.klib"
+    },
+    "a337055a822f4ec7abbccbb1ec4ba27d": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-js/2.3.7/37d82694d9aaccb455c6bb4e8006f63493f6d85e/ktor-http-js-2.3.7.klib"
+    },
+    "5741eedc4aa8b39dc391be68e7242dc0": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-utils-js/2.3.7/8742fae9d791f1f99bacd7ffdceee1c2581de267/ktor-utils-js-2.3.7.klib"
+    },
+    "a9cd13410c283b8b8e116aa91d80962e": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-io-js/2.3.7/bb5e75510b2d0d683a291f7e2ba3f66a9b919e5b/ktor-io-js-2.3.7.klib"
+    },
+    "9d1681e502579b5673121f9f710b556b": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-js/1.7.1/89bcb1a934ed5b596bc50c51396b1a3d63905a1c/kotlinx-coroutines-core-jsir-1.7.1.klib"
+    },
+    "12ccc49af2625ea903b05a348b133d47": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu-js/0.20.2/abdbbf76568a76f4b18c170de4aef406ac02c8c5/atomicfu-jsir-0.20.2.klib"
+    },
+    "1d8cd3fd755e9dd4f4f425a5116e8a76": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.8.22/1a8e3601703ae14bb58757ea6b2d8e8e5935a586/kotlin-stdlib-common-1.8.22.jar"
+    },
+    "15b3b054ab4a6eda4a8c899277426209": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlinx-atomicfu-runtime/1.8.20/8ccfa77dc6cd3ff5ffaad24ea15747327d4492ea/kotlinx-atomicfu-runtime-1.8.20.klib"
+    },
+    "3b4683c14b863c94351cb66caef9f746": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-websocket-serialization-js/2.3.7/6870156058ecac4beb25185f83356dd576f539ac/ktor-websocket-serialization-js-2.3.7.klib"
+    },
+    "5dae8ea2686a8547b705dd7de7df7c94": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-serialization-js/2.3.7/c3be2be771aa8ba6ccb739b0f993f47a5cf7e772/ktor-serialization-js-2.3.7.klib"
+    },
+    "4cd4c026f062d504d36a2184a2981749": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-websockets-js/2.3.7/5e94d9bdc50a41c962cf26deee4dbaf1f29f3475/ktor-websockets-js-2.3.7.klib"
+    },
+    "e1ff4aeb4573ceae74914b16663261be": {
+      "src": "/Users/chloebrett/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-websockets-js/2.3.7/6e32dd2c6d4ffd23e2fffcae1b1e0bebca9a0e83/ktor-client-websockets-js-2.3.7.klib"
+    }
+  }
+}

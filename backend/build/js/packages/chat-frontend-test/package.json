@@ -1,0 +1,17 @@
+{
+  "name": "chat-frontend-test",
+  "version": "0.0.0-unspecified",
+  "main": "kotlin/chat-frontend-test.js",
+  "devDependencies": {
+    "typescript": "5.0.4"
+  },
+  "dependencies": {
+    "format-util": "^1.0.5",
+    "node-fetch": "2.6.7",
+    "abort-controller": "3.0.0",
+    "ws": "8.5.0"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

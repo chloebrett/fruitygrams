@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="chat-backend">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="chat-backend.jar" />
+  </artifact>
+</component>
