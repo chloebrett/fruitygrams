@@ -157,6 +157,18 @@ class ChatApplication {
                 }
             }
             command.startsWith("/letters") -> server.sendTo(id, "server", "[letters] ${letterBag.pullLetters(16)}")
+            command.startsWith("/split") -> {
+                server.broadcastSplit(letterBag)
+            }
+            command.startsWith("/dump") -> {
+                val dumpedLetter = command.removePrefix("/dump").trim()
+                if (dumpedLetter.length != 1) {
+                    return
+                }
+
+                letterBag.putLetter(dumpedLetter.first())
+                server.sendTo(id, "server", "[split] ${letterBag.pullLetters(3)}")
+            }
             command.startsWith("/reset") -> {
                 letterBag = LetterBag()
                 server.sendTo(id, "server", "[reset] server state reset")

@@ -81,6 +81,10 @@ const resetServerState = () => {
   socket.send("/reset");
 };
 
+const requestSplit = () => {
+  socket.send("/split");
+}
+
 const Canvas = () => {
   const [board, setBoard] = useState<BoardState>(INITIAL_BOARD_STATE);
   const [rects, setRects] = useState<ShapeState[]>(INITIAL_STATE);
@@ -94,6 +98,13 @@ const Canvas = () => {
         const letters: string[] = data.substring("[server] [letters] ".length).split("");
         const shapes = letters.map(generateShape);
         setRects(shapes);
+      }
+
+      if (data.includes("[split]")) {
+        console.log(data)
+        const letters: string[] = data.substring("[server] [split] ".length).split("");
+        const shapes = letters.map(generateShape);
+        setRects(oldShapes => oldShapes.concat([...shapes]));
       }
     };
 
@@ -181,6 +192,7 @@ const Canvas = () => {
         {validityCheckResult.invalidWords.join(", ")}
       </p>
       <button onClick={resetServerState}>Reset</button>
+      <button onClick={requestSplit}>Split!</button>
       <Stage width={window.innerWidth} height={window.innerHeight}>
         <Layer>
           {rects.map((rect) => (

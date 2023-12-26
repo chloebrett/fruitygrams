@@ -46,5 +46,10 @@ class LetterBag {
         return letters
     }
 
+    fun putLetter(letter: Char) {
+        bagContents.add(letter)
+        bagContents.shuffle()
+    }
+
     private fun pullLetter(): Char? = bagContents.removeFirstOrNull()
 }

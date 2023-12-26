@@ -101,6 +101,13 @@ class ChatServer {
         members[sender]?.send(Frame.Text("[server::help] Possible commands are: /user, /help and /who"))
     }
 
+    suspend fun broadcastSplit(letterBag: LetterBag) {
+        members.values.forEach { socket ->
+            val message = "[server] [split] ${letterBag.pullLetters(1)}"
+            socket.send(Frame.Text(message))
+        }
+    }
+
     /**
      * Handles sending to a [recipient] from a [sender] a [message].
      *
